@@ -5,6 +5,10 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 
+#include "quark/quark.h"
+
+int wifi_setuped = 0;
+
 void app_main(void)
 {
     printf("Hello world!\n");
@@ -21,6 +25,12 @@ void app_main(void)
 
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
+
+    if (wifi_setuped == 0) {
+        wifi_setuped = 1;
+        printf("start to connect to wifi....\n");
+        rc_set_wifi("kog", "huxiaolong@2018");
+    }        
 
     for (int i = 10; i >= 0; i--) {
         printf("Restarting in %d seconds...\n", i);
