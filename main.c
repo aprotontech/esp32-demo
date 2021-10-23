@@ -25,15 +25,20 @@ void app_main(void)
 
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
-
+    
     if (wifi_setuped == 0) {
         wifi_setuped = 1;
-        printf("start to connect to wifi....\n");
-        rc_set_wifi("kog", "huxiaolong@2018");
+        for (int i = 10; i >= 0; i--) {
+            printf("Start to connect to wifi in %d seconds...\n", i);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+        }
+        rc_set_wifi("kog_2.4G", "huxiaolong@2018");
     }        
 
-    for (int i = 10; i >= 0; i--) {
-        printf("Restarting in %d seconds...\n", i);
+    for (int i = 60; i >= 0; i--) {
+        if (i % 10 == 0) {
+            printf("Restarting in %d seconds...\n", i);
+        }
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
     printf("kog Restarting now.\n");
