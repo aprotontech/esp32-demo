@@ -33,7 +33,7 @@ link_directories("./build/quark/lib")
 add_executable(${elf_file} main.c)
 
 ADD_DEPENDENCIES(${elf_file} examples_static quark_static system_static)
-target_link_libraries(${elf_file} examples quark driver device http rcutils md5 json system logs)
+target_link_libraries(${elf_file} examples quark driver device ans http rcutils md5 json system logs)
 target_link_libraries(${elf_file} idf::esp32 idf::freertos idf::spi_flash)
 # Attach additional targets to the executable file for flashing,
 # linker script generation, partition_table generation, etc.

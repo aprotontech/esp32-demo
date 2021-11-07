@@ -37,8 +37,9 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
 
-    mock_virtual_device("test", "app", "secret", 10 * 60);
-    printf("kog Restarting now.\n");
+    // restart every 1hour
+    mock_virtual_device("test", "app", "secret", 60 * 60);
+    printf("Restarting now.\n");
     fflush(stdout);
     esp_restart();
 }
