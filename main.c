@@ -38,7 +38,7 @@ void app_main(void)
 
 
     // restart every 1hour
-    mock_virtual_device("test", "app", "secret", 60 * 60);
+    mock_virtual_device("test", "83PMU3EF65", "secret", 60 * 60);
     printf("Restarting now.\n");
     fflush(stdout);
     esp_restart();
