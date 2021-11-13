@@ -4,12 +4,14 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "esp_spi_flash.h"
+#include "nvs_flash.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 
 #include "quark/quark.h"
 
 extern int mock_virtual_device(char* env, char* app_id, char* app_secret, int test_time_sec);
+extern void bt_scan_test(void * pvParameters);
 
 void app_main(void)
 {
@@ -36,9 +38,14 @@ void app_main(void)
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
+    TaskHandle_t xHandle = NULL;
+    xTaskCreate(bt_scan_test, "bt-test", 5120, NULL, tskIDLE_PRIORITY, &xHandle);
 
     // restart every 1hour
     mock_virtual_device("test", "83PMU3EF65", "secret", 60 * 60);
+/*    while (1) {
+        rc_sleep(60 * 1000);
+    }*/
     printf("Restarting now.\n");
     fflush(stdout);
     esp_restart();
