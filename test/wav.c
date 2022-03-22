@@ -1,5 +1,9 @@
+
+#include "math.h"
 #include "test.h"
 
+
+#define PI 3.1415926
 #define c3_frequency 130.81
 #define c4_frequency 261.63
 
