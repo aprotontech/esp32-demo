@@ -226,4 +226,7 @@ esp_err_t camera_test() {
     return ESP_OK;
 }
 
-void test_camera(void *pvParameters) { camera_test(); }
+void *test_camera(void *params) {
+    camera_test();
+    return NULL;
+}

@@ -31,4 +31,6 @@
 #include "SoundData.h"
 #endif
 
+void *test_camera(void *params);
+
 #endif

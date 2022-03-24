@@ -9,6 +9,7 @@
 #include "freertos/task.h"
 #include "nvs_flash.h"
 #include "quark/quark.h"
+#include "test.h"
 
 #define DM_TAG "demo"
 
@@ -21,10 +22,6 @@
         }                                                                      \
     }
 
-// extern void bt_scan_test(void* pvParameters);
-// extern void test_spearker(void* pvParameters);
-// extern void test_camera(void* pvParameters);
-
 int demo_on_wifi_status_change(int connected) {
     static int access = 0;
     if (connected && !access) {  // wifi status connected
@@ -34,7 +31,7 @@ int demo_on_wifi_status_change(int connected) {
         rc_get_wifi_local_ip(ip);
         LOGI(DM_TAG, "Local Ip: %s", ip);
 
-        //        test_camera(NULL);
+        rc_thread_create(test_camera, NULL, NULL);
     }
 
     return 0;
