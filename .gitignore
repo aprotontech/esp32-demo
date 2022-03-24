@@ -1,0 +1,6 @@
+build/
+.vscode/
+project_description.json
+build_and_flush.bat
+CMakeCache.txt
+CMakeFiles
