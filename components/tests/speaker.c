@@ -1,5 +1,4 @@
 #include "driver/i2s.h"
-#include "rc_player.h"
 #include "test.h"
 
 void play_random_sound(int times) {
@@ -7,8 +6,8 @@ void play_random_sound(int times) {
     char buff[512];
 
     while (times-- > 0) {
-        get_data(buff, sizeof(buff));
-        int bytes_written = 0;
+        get_data((uint8_t*)buff, sizeof(buff));
+        size_t bytes_written = 0;
         i2s_write(0, buff, sizeof(buff), &bytes_written, portMAX_DELAY);
         // LOGI(BT_TAG, "write to speaker %d bytes", bytes_written);
     }
@@ -29,7 +28,6 @@ void test_spearker(void* pvParameters) {
     // play_random_sound();
     // return;
 
-    int stop = 0;
     rc_buf_queue queue = rc_buf_queue_init(4096, 3, WAV_HEADER_BYTES);
     assert(queue != NULL);
 

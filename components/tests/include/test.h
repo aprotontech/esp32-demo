@@ -11,7 +11,7 @@
 #include "esp_gap_bt_api.h"
 #include "hashmap.h"
 #include "quark/quark.h"
-#include "rc_buf_queue.h"
+#include "quark/framework/system/include/rc_buf_queue.h"
 
 #define BT_TAG "[BT]"
 

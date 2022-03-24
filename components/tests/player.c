@@ -14,8 +14,8 @@
 #include "freertos/task.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "rc_http_manager.h"
-#include "rc_http_request.h"
+#include "quark/driver/http/rc_http_manager.h"
+#include "quark/driver/http/rc_http_request.h"
 #include "test.h"
 
 #define WAV_SWAP_SIZE 4096
@@ -39,8 +39,6 @@ typedef struct _bt_box_player_t {
 } bt_box_player_t;
 
 bt_box_player_t* _player;
-
-static int _music_offset = 0;
 
 void bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
                      esp_avrc_ct_cb_param_t* param) {
@@ -351,7 +349,7 @@ int play_online_music(bt_box_player_t* player) {
     rc_buf_queue_clean(player->buf_queue);
 
     // query wav from url
-    rc_thread dt = rc_thread_create(download_thread, player, NULL);
+    rc_thread_create(download_thread, player, NULL);
 
     if (USE_WAV_TYPE == WAV_TYPE_ONLINE_TWO_SWAP) {
         player->swap_thread =

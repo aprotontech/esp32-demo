@@ -80,7 +80,7 @@ typedef struct _bt_scan_ctx_t {
 bt_scan_ctx_t *_scan_ctx;
 
 bt_device_t *on_found_device(bt_scan_ctx_t *ctx, esp_bt_gap_cb_param_t *param) {
-    char *p = param->disc_res.bda;
+    char *p = (char *)param->disc_res.bda;
     char *uuid = rc_buf_tail_ptr(&ctx->buff);
     int n = snprintf(uuid, RC_BUF_LEFT_SIZE(&ctx->buff),
                      "%02x:%02x:%02x:%02x:%02x:%02x", p[0], p[1], p[2], p[3],
@@ -130,6 +130,7 @@ bt_device_t *on_found_device(bt_scan_ctx_t *ctx, esp_bt_gap_cb_param_t *param) {
                 rc_buf_append(&ctx->buff, &x, 1);
                 LOGI(BT_TAG, "--Name: %s", device->name);
             }
+            break;
         }
         case ESP_BT_GAP_DEV_PROP_EIR: {
             if (p->val == NULL) break;
@@ -258,8 +259,8 @@ void bt_scan_test(void *pvParameters) {
             bt_device_t *device = &_scan_ctx->devices[i];
             LOGI(BT_TAG, "BT Device(%s), name(%s), rssi(%d), type(0x%x)",
                  device->bda_str, device->name, device->rssi, device->cod);
-            if (esp_bt_gap_is_valid_cod(device->cod) ==
-                ESP_BT_COD_MAJOR_DEV_AV) {
+            if (esp_bt_gap_is_valid_cod(device->cod)/* ==
+                ESP_BT_COD_MAJOR_DEV_AV*/) {
                 LOGI(BT_TAG, "found ESP_BT_COD_MAJOR_DEV_AV device");
                 esp_bt_gap_get_remote_services(device->bda);
             }
