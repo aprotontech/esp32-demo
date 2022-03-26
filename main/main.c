@@ -71,6 +71,7 @@ void app_main(void) {
     settings.app_secret = "7045298f456cea6d7a4737c62dd3b89e";
     settings.uuid = NULL;
     settings.enable_keepalive = 1;
+    settings.auto_report_location = 1;
     settings.iot_platform = RC_IOT_QUARK;
     settings.service_url = "http://192.168.3.24:8080/api";
 
