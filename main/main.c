@@ -2,9 +2,10 @@
 #include <stdio.h>
 
 #include "esp_event.h"
-#include "esp_spi_flash.h"
+#include "spi_flash_mmap.h"
 #include "esp_system.h"
 #include "esp_wifi.h"
+#include "esp_chip_info.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
@@ -49,7 +50,9 @@ void app_main(void) {
 
     printf("silicon revision %d, ", chip_info.revision);
 
-    printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
+    uint32_t size_flash_chip;
+    esp_flash_get_size(NULL, &size_flash_chip);
+    printf("%dMB %s flash\n", (int)(size_flash_chip / (1024 * 1024)),
            (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded"
                                                          : "external");
     rc_sleep(1000);
@@ -73,7 +76,7 @@ void app_main(void) {
     settings.enable_keepalive = 1;
     settings.auto_report_location = 1;
     settings.iot_platform = RC_IOT_QUARK;
-    settings.service_url = "http://192.168.3.24:8080/api";
+    settings.service_url = "http://home.aproton.tech/api";
 
     // init sdk
     DEMO_EXCEPT_SUCCESS(rc_sdk_init("test", 1, &settings));
@@ -85,7 +88,7 @@ void app_main(void) {
         rc_sleep(1000);
     }
 
-    DEMO_EXCEPT_SUCCESS(rc_set_wifi("kog_2.4G", "huxiaolong@2018"));
+    DEMO_EXCEPT_SUCCESS(rc_set_wifi("aproton", "aproton@2021"));
 
     // entry working thread
     for (i = 10; i < 60 * 60; ++i) {

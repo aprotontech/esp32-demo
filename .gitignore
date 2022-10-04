@@ -5,3 +5,4 @@ build_and_flush.bat
 CMakeCache.txt
 CMakeFiles
 sdkconfig.old
+dependencies.lock
