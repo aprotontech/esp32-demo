@@ -1,4 +1,5 @@
 #include "esp_camera.h"
+#include "esp_rom_gpio.h"
 #include "esp_http_server.h"
 #include "esp_log.h"
 #include "esp_system.h"
@@ -75,7 +76,7 @@ static camera_config_t camera_config = {
 esp_err_t camera_init() {
     // power up the camera if PWDN pin is defined
     if (CAM_PIN_PWDN != -1) {
-        gpio_pad_select_gpio(CAM_PIN_PWDN);
+        esp_rom_gpio_pad_select_gpio(CAM_PIN_PWDN);
         gpio_set_direction(CAM_PIN_PWDN, GPIO_MODE_OUTPUT);
         gpio_set_level(CAM_PIN_PWDN, 0);
     }
@@ -166,7 +167,7 @@ esp_err_t jpg_stream_httpd_handler(httpd_req_t *req) {
         last_frame = fr_end;
         frame_time /= 1000;
         ESP_LOGI(CAM_TAG, "MJPG: %uKB %ums (%.1ffps)",
-                 (uint32_t)(_jpg_buf_len / 1024), (uint32_t)frame_time,
+                 (unsigned int)(_jpg_buf_len / 1024), (unsigned int)frame_time,
                  1000.0 / (uint32_t)frame_time);
     }
 
@@ -227,6 +228,6 @@ esp_err_t camera_test() {
 }
 
 void *test_camera(void *params) {
-    camera_test();
+    //camera_test();
     return NULL;
 }
