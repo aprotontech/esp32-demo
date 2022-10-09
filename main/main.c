@@ -38,6 +38,13 @@ int demo_on_wifi_status_change(int connected) {
     return 0;
 }
 
+int demo_on_time_change(int sec, int usec) { return 0; }
+
+char _test_service_config[] =
+    "{\"rc\":0,\"default\":{\"host\":\"192.168.3.27\",\"ips\":["
+    "\"192.168.3.27\"],\"prefix\":"
+    "\"\\/api\",\"protocols\":{\"http\":8080,\"mqtt\":10883}}}";
+
 void app_main(void) {
     int i = 0;
 
@@ -76,10 +83,13 @@ void app_main(void) {
     settings.enable_keepalive = 1;
     settings.auto_report_location = 1;
     settings.iot_platform = RC_IOT_QUARK;
-    settings.service_url = "http://home.aproton.tech/api";
+    settings.max_ans_wait_time_sec = 3;
+    settings.service_url = "http://192.168.3.27:8080/api";
+    settings.default_svr_config = _test_service_config;
+    // settings.service_url = "http://home.aproton.tech/api";
 
     // init sdk
-    DEMO_EXCEPT_SUCCESS(rc_sdk_init("test", 1, &settings));
+    DEMO_EXCEPT_SUCCESS(rc_sdk_init(&settings, 0));
 
     // get wifi status, if is not connected, do connect
     for (i = 5; i >= 0; i--) {

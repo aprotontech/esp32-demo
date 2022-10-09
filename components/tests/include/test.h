@@ -5,10 +5,10 @@
 
 #include <string.h>
 
-#include "esp_bt.h"
-#include "esp_bt_device.h"
-#include "esp_bt_main.h"
-#include "esp_gap_bt_api.h"
+//#include "esp_bt.h"
+//#include "esp_bt_device.h"
+//#include "esp_bt_main.h"
+//#include "esp_gap_bt_api.h"
 #include "hashmap.h"
 #include "quark/quark.h"
 #include "quark/framework/system/include/rc_buf_queue.h"
