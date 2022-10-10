@@ -11,6 +11,7 @@
 #include "nvs_flash.h"
 #include "quark/quark.h"
 #include "test.h"
+#include "config.h"
 
 #define DM_TAG "demo"
 
@@ -98,7 +99,7 @@ void app_main(void) {
         rc_sleep(1000);
     }
 
-    DEMO_EXCEPT_SUCCESS(rc_set_wifi("aproton", "aproton@2021"));
+    DEMO_EXCEPT_SUCCESS(rc_set_wifi(TEST_WIFI_NAME, TEST_WIFI_PASS));
 
     // entry working thread
     for (i = 10; i < 60 * 60; ++i) {
